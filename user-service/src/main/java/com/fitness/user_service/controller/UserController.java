@@ -27,7 +27,7 @@ public class UserController {
         return ResponseEntity.ok(userService.register(request));
     }
 
-    @GetMapping("/findAll")
+    @GetMapping("/")
     public ResponseEntity<List<UserResponse>> findAll(){
         return ResponseEntity.ok(userService.findAll());
     }

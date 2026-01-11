@@ -4,13 +4,14 @@ import com.fitness.activity_service.dto.ActivityRequest;
 import com.fitness.activity_service.dto.ActivityResponse;
 import com.fitness.activity_service.service.ActivityService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/activities")
 public class ActivityController {
