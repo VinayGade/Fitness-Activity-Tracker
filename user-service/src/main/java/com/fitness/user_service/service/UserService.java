@@ -25,8 +25,22 @@ public class UserService {
 
     public UserResponse register(RegisterRequest request) {
 
-        if(userRepository.existsByEmail(request.getEmail())){
-            throw new RuntimeException("User already exists...");
+        String email = request.getEmail();
+
+        if(userRepository.existsByEmail(email)){
+            User existingUser = userRepository.findByEmail(email);
+
+            UserResponse userResponse = new UserResponse();
+
+            userResponse.setId(existingUser.getId());
+            userResponse.setEmail(existingUser.getEmail());
+            userResponse.setFirstName(existingUser.getFirstName());
+            userResponse.setLastName(existingUser.getLastName());
+            userResponse.setCreatedAt(existingUser.getCreatedAt());
+            userResponse.setUpdatedAt(existingUser.getUpdatedAt());
+            userResponse.setPassword(existingUser.getPassword());
+
+            return userResponse;
         }
 
         User user = new User();
@@ -34,6 +48,7 @@ public class UserService {
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setPassword(request.getPassword());
+        user.setKeycloakId(request.getKeycloakId());
 
         User savedUser = userRepository.save(user);
 
@@ -43,6 +58,7 @@ public class UserService {
         userResponse.setEmail(savedUser.getEmail());
         userResponse.setFirstName(savedUser.getFirstName());
         userResponse.setLastName(savedUser.getLastName());
+        userResponse.setKeycloakId(savedUser.getKeycloakId());
         userResponse.setCreatedAt(savedUser.getCreatedAt());
         userResponse.setUpdatedAt(savedUser.getUpdatedAt());
         userResponse.setPassword(savedUser.getPassword());
@@ -88,6 +104,6 @@ public class UserService {
 
     public boolean existByUserId(String userId) {
         log.info("Calling user service for {}", userId);
-        return userRepository.existsById(userId);
+        return userRepository.existsByKeycloakId(userId);
     }
 }
